@@ -6,6 +6,12 @@ import Average from './components/Average'
 import Positive from './components/Positive'
 
 const Statistics = ({good, bad, all}) => {
+  
+  if(all === 0){
+    return(<p>No feedback given</p>)
+  }
+
+  
   return(
     <>
     <Average good={good} bad={bad} all={all}/>
