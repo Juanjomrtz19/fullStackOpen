@@ -5,6 +5,15 @@ import Result from './components/Result'
 import Average from './components/Average'
 import Positive from './components/Positive'
 
+const Statistics = ({good, bad, all}) => {
+  return(
+    <>
+    <Average good={good} bad={bad} all={all}/>
+    <Positive good={good} all={all}/>
+    </>
+  );
+}
+
 const App = () => {
   // save clicks of each button to its own state
   const [good, setGood] = useState(0)
@@ -23,8 +32,8 @@ const App = () => {
       <Result text={"neutral"} sum={neutral}/>
       <Result text={"bad"} sum={bad}/>
       <Result text={"all"} sum={all}/>
-      <Average good={good} bad={bad} all={all}/>
-      <Positive good={good} all={all}/>
+      <Statistics good={good} bad={bad} all={all}/>
+      
     </div>
   )
 }
