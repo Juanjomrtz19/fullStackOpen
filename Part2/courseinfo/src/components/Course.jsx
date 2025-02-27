@@ -1,4 +1,4 @@
-import { useState } from "react";
+
 
 const Course = ({course}) => {
     const {name, parts} = course;
