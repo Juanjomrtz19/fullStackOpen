@@ -3,7 +3,11 @@ import { useState } from "react";
 const Course = ({course}) => {
     const {name, parts} = course;
 
-    let sum = 0;
+    const sum = parts.reduce((s,p) => 
+        {
+            s+=p.exercises;
+            return s;
+    }, 0);
 
 
     return(
@@ -12,7 +16,6 @@ const Course = ({course}) => {
         {
             parts.map(part => {
                 const {name, exercises, id} = part;
-                sum += exercises
                 return(
                    <p key={id}>{name} {exercises}</p> 
                 );
