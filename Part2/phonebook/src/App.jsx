@@ -1,4 +1,7 @@
 import { useState } from 'react'
+import Filter from './components/Filter';
+import PersonForm from './components/PersonForm';
+import Persons from './components/Persons';
 
 const App = () => {
   const [persons, setPersons] = useState([
@@ -10,13 +13,15 @@ const App = () => {
   const [newName, setNewName] = useState('');
   const [newPhone, setNewPhone] = useState('');
   const [personsShown, setPersonsShown] = useState(persons);
+  const [filter, setFilter] = useState('');
 
   function handleName (event){
     setNewName(event.target.value);
   }
 
   function handleFilter(event){
-    setPersonsShown(persons.filter(person =>(person.name.includes(event.target.value))))
+    setPersonsShown(persons.filter(person =>(person.name.includes(event.target.value))));
+    setFilter(event.target.value);
   }
 
   function handleForm(event){
@@ -27,7 +32,8 @@ const App = () => {
       return
     }
 
-    setPersons(persons.concat({name: newName, phone: newPhone}))
+    setPersons(persons.concat({name: newName, number: newPhone, id: persons.length() + 1}))
+    setPersonsShown(persons.filter(person =>(person.name.includes(filter))))
     
   }
 
@@ -35,41 +41,14 @@ const App = () => {
     <div>
       <h2>Phonebook</h2>
 
-      <div>
-        filter shown with 
-        <input
-          onChange={handleFilter}
-        />
-      </div>
+      <Filter handleFilter={handleFilter}/>
 
       <h2>Add a new</h2>
 
-      <form onSubmit={handleForm}>
-        <div>
-          name: <input 
-                  value={newName}
-                  onChange={handleName}
-                />
-        </div>
-        <div>
-          phone: <input 
-                  value={newPhone}
-                  onChange={(event) => setNewPhone(event.target.value)}
-                />
-        </div>
-
-        <div>
-          <button type="submit">add</button>
-        </div>
-      </form>
+      <PersonForm handleForm={handleForm} newName={newName} handleName={handleName}
+      newPhone={newPhone} handlePhone={setNewPhone}/>
       <h2>Numbers</h2>
-      {
-        personsShown.map(person => (
-        <div key={person.name}> 
-          <p>{person.name} {person.number}</p>
-        </div>
-        ))
-      }
+      <Persons persons={personsShown}/>
     </div>
   )
 }
