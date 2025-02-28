@@ -13,11 +13,12 @@ const App = () => {
   function handleForm(event){
     event.preventDefault();
     
-    if(newName === ""){
+    if(persons.filter((person) => person.name === newName).length === 1){
+      alert(`${newName} is already added to phonebook`);
       return
     }
 
-    setPersons(persons.concat({name: newName}));
+    setPersons(persons.concat({name: newName}))
   }
 
   return (
@@ -36,7 +37,7 @@ const App = () => {
       </form>
       <h2>Numbers</h2>
       {
-        persons.map(person => (<p>{person.name}</p>))
+        persons.map(person => (<p key={person.name}>{person.name}</p>))
       }
     </div>
   )
