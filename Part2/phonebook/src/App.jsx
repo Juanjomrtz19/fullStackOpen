@@ -51,8 +51,14 @@ const App = () => {
       setPersons(persons.concat(newPerson))
       setPersonsShown(personsShown.concat(newPerson))
     })
-    
-    
+  }
+
+  function handleDelete(person){
+    if(window.confirm(`Delete ${person.name}`)){
+      personService.throwAway(person.id);
+      setPersons(persons.filter(p => p.id !== person.id))
+      setPersonsShown(persons.filter(p => p.id !== personsShown.id))
+    } 
   }
 
   return (
@@ -66,7 +72,7 @@ const App = () => {
       <PersonForm handleForm={handleForm} newName={newName} handleName={handleName}
       newPhone={newPhone} handlePhone={setNewPhone}/>
       <h2>Numbers</h2>
-      <Persons persons={personsShown}/>
+      <Persons persons={personsShown} handleDelete={handleDelete}/>
     </div>
   )
 }
