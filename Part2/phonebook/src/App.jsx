@@ -3,6 +3,7 @@ import Filter from './components/Filter';
 import PersonForm from './components/PersonForm';
 import Persons from './components/Persons';
 import axios from 'axios'
+import './app.css'
 import personService from './services/phones'
 
 const App = () => {
@@ -11,6 +12,7 @@ const App = () => {
   const [newPhone, setNewPhone] = useState('');
   const [personsShown, setPersonsShown] = useState(persons);
   const [filter, setFilter] = useState('');
+  const [success, setSuccess] = useState(null);
 
   useEffect(() => {
     personService.
@@ -50,6 +52,10 @@ const App = () => {
     .then(newPerson => {
       setPersons(persons.concat(newPerson))
       setPersonsShown(personsShown.concat(newPerson))
+      setSuccess(`Added ${newPerson.name}`)
+      setTimeout(() => {
+        setSuccess(null);
+      }, 5000);
     })
   }
 
@@ -64,7 +70,8 @@ const App = () => {
   return (
     <div>
       <h2>Phonebook</h2>
-
+      
+      {success ? (<p className='success'>{success}</p>) : ''}
       <Filter handleFilter={handleFilter}/>
 
       <h2>Add a new</h2>
